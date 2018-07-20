@@ -139,8 +139,9 @@ function LawnMover(startPos, lawn) {
 	this.clipperWidth = 4;
 	this.size = 10;
 	this.speed = 1;
-	this.heading = 180;
+	this.heading = 120;
 	this.elem = ""
+	this.colided = 0;
 	this.play = function () {
 		this.requestID = window.requestAnimationFrame(this.move.bind(this));
 	}
@@ -149,11 +150,44 @@ function LawnMover(startPos, lawn) {
 	}
 	this.move = function (elem) {
 		
+		if(this.colided  == 0){
+			let colition = this.colition();
+			if (colition !== false){
+				var fel = {}
+				this.heading = Math.abs(this.heading - 180);
+				if(this.pos.x < this.size){
+					fel.x = this.size - this.pos.x
+					// this.pos.x += fel.x
+				}
+				if( this.lawn.clientWidth - this.pos.x < this.size){
+					fel.x = this.lawn.clientWidth - this.size - this.pos.x
+					// this.pos.x -= fel.x
+				}
+				if(this.lawn.clientHeight - this.pos.y < this.size){
+					fel.y = this.lawn.clientHeight- this.size - this.pos.y
+					// this.pos.y -= fel.y
+				}
+				if( this.pos.y  < this.size){
+					fel.y =  this.size - this.pos.y 
+					// this.pos.y += fel.y
+				}
+				this.heading;
+				this.colided = 10;
+				debugger;
+				
+			}
+		}else{
+			
+				this.heading;
+				debugger;
+				this.colided --;
+		}
+
 		let addToX = this.speed*Math.cos(toRadians(this.heading));
 		let addToY = this.speed*Math.sin(toRadians(this.heading));
 		this.pos.x += addToX;
 		this.pos.y += addToY;
-		this.colition();
+
 		this.elem.style.left = this.pos.x + "px";
 		this.elem.style.top = this.pos.y + "px";
 		this.requestID = window.requestAnimationFrame(this.move.bind(this));
@@ -177,10 +211,10 @@ function LawnMover(startPos, lawn) {
 		}
 		this.lawn
 		
-		if (this.pos.x < this.size ||this.pos.x >  this.lawn.clientWidth - this.size ||this.pos.y < this.size ||this.pos.y >this.lawn.clientHeight- this.size ) {
-			this.heading = Math.random() * ((this.heading-90) - (this.heading+90)) + (this.heading+90);
-			return true
+		if(this.pos.x < this.size || this.pos.x >  this.lawn.clientWidth - this.size ||this.pos.y < this.size || this.pos.y >this.lawn.clientHeight- this.size ) {
+			return this.pos;
 		}
+		return false
 	}
 
 	// body...
