@@ -1,0 +1,58 @@
+
+#lawn{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: green;
+	min-height: 100vh;
+}
+.corner, .mover{
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: black;
+	transform: translate(-50%, -50%);
+	cursor: move;
+}
+.corner:active{
+	cursor: grabbing;
+	
+}
+.mover{
+	background: #777;
+	width: 20px;
+	height: 20px;
+
+}
+.mover:after{
+	content: "";
+	display: block;
+	width: 5px;
+	height: 20px;
+}
+div .corner:first-of-type{
+	background: red;
+}
+svg{
+	height: 100vh;
+}
+#lawnEdges{
+	fill: none;
+	stroke:black;
+	stroke-width:1;
+
+}
+
+#options{
+	position: fixed;
+	top: 10px;
+	left: 10px;
+}
+#options button{
+
+}
+
+#options button.active{
+	background: #777;
+}
